@@ -17,7 +17,7 @@ end euclidean_divider;
 
 architecture Behavioral of euclidean_divider is
 
-type STATE_TYPE is (INIT, COMP);
+type STATE_TYPE is (INIT, COMP, SET);
 signal current_state : STATE_TYPE;
 signal next_state : STATE_TYPE;
 
@@ -47,8 +47,9 @@ process (current_state, start, remainder_temp, intdata_in2, done)
     begin
         case current_state is 
             when INIT   => if (start = '1') then 
-                                next_state <= COMP;
+                                next_state <= SET;
                            end if;
+            when SET    => next_state <= COMP;
             when COMP   => if( done = '0' ) then
                                 next_state <= COMP;
                            else
@@ -61,7 +62,10 @@ process (current_state, start, remainder_temp, intdata_in2, done)
 process (current_state, remainder_temp, quotient_temp, intdata_in1, intdata_in2)
     begin
         case current_state is
-            when INIT   => quotient_temp   <= 0;
+            when INIT   => quotient_temp   <= quotient_temp;
+                           remainder_temp  <= remainder_temp;
+                           done            <= '0';
+            when SET    => quotient_temp   <= 0;
                            remainder_temp  <= intdata_in1;
                            done            <= '0';
             when COMP   => if( remainder_temp >= intdata_in2 ) then
