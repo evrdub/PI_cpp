@@ -62,7 +62,7 @@ end process;
 
 s_start <= '0', '1' after 25 ns, '0' after 30 ns, '1' after 65ns, '0' after 70ns;
 s_RST  <= '1','0' after 15ns;
-s_data_in1 <= std_logic_vector(to_unsigned(5431, s_data_in1'length));
+s_data_in1 <= std_logic_vector(to_unsigned(2345, s_data_in1'length));
 s_data_in2 <= std_logic_vector(to_unsigned(7, s_data_in2'length));
 
 end Behavioral;

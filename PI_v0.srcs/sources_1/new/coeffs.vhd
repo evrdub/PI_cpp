@@ -6,7 +6,8 @@ entity coeffs is
     Generic( NbBits        : integer := 16);
     Port( clk       : in std_logic;
           rst       : in std_logic;
-          enable    : in std_logic;
+          enableD   : in std_logic;
+          enableU   : in std_logic;
           length    : in std_logic_vector((NbBits-1) downto 0);
           U         : out std_logic_vector((NbBits-1) downto 0);
           D         : out std_logic_vector((NbBits-1) downto 0)
@@ -26,9 +27,13 @@ process(clk, rst)
         U_int   <= to_integer(unsigned(length))-1;
         D_int   <= 2*to_integer(unsigned(length))-1;
     elsif (CLK'event and CLK = '1') then
-        if ( (enable = '1') AND (U_int-1 >= 0) )then
-            U_int   <= U_int-1;
-            D_int   <= D_int-2;
+        if (U_int-1 >= 0) then
+            if (enableU = '1') then
+                U_int   <= U_int-1;
+            end if;
+            if (enableD = '1') then
+                D_int   <= D_int-2;
+            end if;
         end if;
     end if;
 end process;
