@@ -16,6 +16,7 @@ component Processing_Unit is
             value_in    : in std_logic_vector((NbBits-1) downto 0);
             length      : in std_logic_vector((NbBits-1) downto 0);
             start_UT    : in std_logic;
+            enable_read : in std_logic;
             
             done_UT     : out std_logic;
             carry_out   : out std_logic_vector((NbBits-1) downto 0);
@@ -32,6 +33,7 @@ signal s_carry_in    : std_logic_vector((NumberBits-1) downto 0);
 signal s_value_in    : std_logic_vector((NumberBits-1) downto 0);
 signal s_length      : std_logic_vector((NumberBits-1) downto 0):= std_logic_vector(to_unsigned(13,NumberBits));
 signal s_start_UT    : std_logic;
+signal s_enable_read : std_logic;
 
 signal s_done_UT     : std_logic;
 signal s_carry_out   : std_logic_vector((NumberBits-1) downto 0);
@@ -57,6 +59,7 @@ Port map(   clk         => s_clk,
             value_in    => s_value_in,
             length      => s_length,
             start_UT    => s_start_UT,
+            enable_read => s_enable_read,
             done_UT     => s_done_UT,
             carry_out   => s_carry_out,
             value_out   => s_value_out,
@@ -74,6 +77,7 @@ end process;
 
 s_value_in <= std_logic_vector(to_unsigned(20, s_value_in'length));
 s_start_UT <=  '0', '1' after 20ns, '0' after 40ns;
+s_enable_read <= '1';
 s_RST  <= '1','0' after 15ns;
 
 end Behavioral;

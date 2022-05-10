@@ -10,6 +10,7 @@ entity Processing_Unit is
             value_in    : in std_logic_vector((NbBits-1) downto 0);
             length      : in std_logic_vector((NbBits-1) downto 0);
             start_UT    : in std_logic;
+            enable_read : in std_logic;
             
             done_UT     : out std_logic;
             carry_out   : out std_logic_vector((NbBits-1) downto 0);
@@ -29,6 +30,7 @@ component FSM_UT is
            length       : in std_logic_vector((NbBits-1) downto 0);
            done_div     : in std_logic;
            start_UT     : in std_logic;
+           enable_read  : in std_logic;
            start_div    : out std_logic;
            digit_calc   : out std_logic;
            load_reg     : out std_logic;
@@ -124,6 +126,7 @@ Port map(    clk          => clk,
              length       => length,
              done_div     => s_done_div,
              start_UT     => start_UT,
+             enable_read  => enable_read,
              start_div    => s_start_div,
              digit_calc   => s_digit_calc,
              load_reg     => s_load_reg,
